@@ -1,35 +1,30 @@
 function Header({ lastUpdated, systemHealth, loading }) {
-  const isHealthy = !systemHealth || systemHealth.status === 'healthy' || systemHealth.status === 'unknown';
-  const isDegraded = systemHealth?.status === 'warning';
-  const isCritical = systemHealth?.status === 'critical';
-
+  const status = systemHealth?.status ?? 'unknown';
   const statusText = loading
-    ? 'Connecting…'
-    : isCritical
-    ? 'Critical State Detected'
-    : isDegraded
-    ? 'Degraded — Alerts Active'
-    : 'All Systems Nominal';
-
-  const statusClass = isCritical ? 'critical' : isDegraded ? 'warning' : 'healthy';
+    ? 'CONNECTING'
+    : status === 'critical'
+    ? 'CRITICAL'
+    : status === 'warning'
+    ? 'DEGRADED'
+    : status === 'healthy'
+    ? 'NOMINAL'
+    : 'UNKNOWN';
 
   return (
     <header className="header">
-      <div className="header-brand">
-        <div className="header-logo">
-          <span className="logo-mark">◈</span>
-          <span className="logo-text">CloudOps<span className="logo-accent"> Monitor</span></span>
-        </div>
-        <span className="header-env">Production · Azure</span>
+      <div className="header-left">
+        <span className="logo">CLOUDOPS<span className="logo-slash">/</span>MONITOR</span>
+        <span className="header-divider">|</span>
+        <span className="header-env">PROD · AZURE</span>
       </div>
-      <div className="header-meta">
-        <div className="header-status">
-          <span className={`status-dot status-dot--${statusClass}${loading ? ' status-dot--pulse' : ''}`}></span>
-          <span className={`status-label status-label--${statusClass}`}>{statusText}</span>
-        </div>
-        {lastUpdated && (
-          <span className="header-timestamp">Updated {lastUpdated}</span>
-        )}
+      <div className="header-center">
+        <span className={`header-status header-status--${status}`}>
+          <span className="header-status-dot"></span>
+          {statusText}
+        </span>
+      </div>
+      <div className="header-right">
+        {lastUpdated && <span className="header-ts">{lastUpdated}</span>}
       </div>
     </header>
   );

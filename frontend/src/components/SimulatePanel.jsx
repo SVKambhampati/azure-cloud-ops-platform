@@ -24,56 +24,23 @@ function SimulatePanel({ onSubmit, submitting, lastSubmit }) {
 
   return (
     <div className="sim-panel">
-      <div className="sim-header">
-        <div className="sim-title-row">
-          <span className="sim-title">Simulate Event</span>
-          <span className="sim-hint">POST → Azure Function → Blob Storage</span>
-        </div>
-        {submitting && (
-          <span className="sim-sending">
-            <span className="sim-spinner"></span>
-            Sending…
-          </span>
-        )}
-        {!submitting && lastSubmit && (
-          <span className="sim-sent">✓ Sent {lastSubmit}</span>
-        )}
+      <div className="sim-prompt">
+        <span className="sim-caret">▶</span>
+        <span className="sim-cmd">POST /api/submittelemetry</span>
+        <span className="sim-pipe">→</span>
+        <span className="sim-dest">azure-functions</span>
+        {submitting && <span className="sim-status sim-status--sending">⠋ sending</span>}
+        {!submitting && lastSubmit && <span className="sim-status sim-status--ok">✓ {lastSubmit}</span>}
       </div>
-      <div className="sim-buttons">
-        <button
-          className="sim-btn sim-btn--metrics"
-          onClick={handleMetrics}
-          disabled={submitting}
-          title="POST random CPU / memory / error_rate metrics"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-          </svg>
-          Metrics
+      <div className="sim-actions">
+        <button className="sim-btn sim-btn--metrics" onClick={handleMetrics} disabled={submitting}>
+          metrics
         </button>
-        <button
-          className="sim-btn sim-btn--health"
-          onClick={handleHealthCheck}
-          disabled={submitting}
-          title="POST a health check event"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-          </svg>
-          Health Check
+        <button className="sim-btn sim-btn--health" onClick={handleHealthCheck} disabled={submitting}>
+          health_check
         </button>
-        <button
-          className="sim-btn sim-btn--error"
-          onClick={handleError}
-          disabled={submitting}
-          title="POST a simulated error event"
-        >
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="12" />
-            <line x1="12" y1="16" x2="12.01" y2="16" />
-          </svg>
-          Simulate Error
+        <button className="sim-btn sim-btn--error" onClick={handleError} disabled={submitting}>
+          simulated_error
         </button>
       </div>
     </div>
