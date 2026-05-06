@@ -1,6 +1,12 @@
-import { pipelineServices } from '../data/mockData';
+const SERVICES = [
+  { name: 'Flask Backend', status: 'operational', latency: '~12ms', uptime: '99.8%' },
+  { name: 'Azure Event Hub', status: 'operational', latency: '~8ms', uptime: '99.9%' },
+  { name: 'Azure Function', status: 'operational', latency: '~350ms', uptime: '99.5%' },
+  { name: 'Blob Storage', status: 'operational', latency: '~40ms', uptime: '99.9%' },
+  { name: 'Cosmos DB', status: 'coming_soon', latency: '—', uptime: '—' },
+];
 
-const statusLabel = {
+const STATUS_LABEL = {
   operational: 'Operational',
   degraded: 'Degraded',
   down: 'Down',
@@ -15,7 +21,7 @@ function PipelineStatus() {
         <span className="panel-badge">Live</span>
       </div>
       <ul className="pipeline-list">
-        {pipelineServices.map((svc) => (
+        {SERVICES.map((svc) => (
           <li key={svc.name} className={`pipeline-item pipeline-item--${svc.status}`}>
             <div className="pipeline-left">
               <span className={`status-dot status-dot--${svc.status}`}></span>
@@ -35,7 +41,7 @@ function PipelineStatus() {
                 </>
               )}
               <span className={`pipeline-badge pipeline-badge--${svc.status}`}>
-                {statusLabel[svc.status]}
+                {STATUS_LABEL[svc.status]}
               </span>
             </div>
           </li>
