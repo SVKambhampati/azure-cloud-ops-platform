@@ -13,7 +13,7 @@ function AlertsPanel({ alerts = [], loading }) {
   return (
     <div className="panel">
       <div className="panel-header">
-        <span className="panel-title">ALERTS</span>
+        <span className="panel-title">Active Alerts</span>
         {!loading && (
           <span className={`panel-count panel-count--${criticalCount > 0 ? 'critical' : hasAlerts ? 'warning' : 'ok'}`}>
             {hasAlerts ? alerts.length : '0'}

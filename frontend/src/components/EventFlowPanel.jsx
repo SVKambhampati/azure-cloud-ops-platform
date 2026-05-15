@@ -211,8 +211,8 @@ export default function EventFlowPanel({ onSubmit, submitting }) {
       {/* Header */}
       <div className="efp-header">
         <div className="efp-title-group">
-          <span className="efp-title">Try it — send a live event</span>
-          <span className="efp-sub">Click an event type to fire a real telemetry payload through the pipeline</span>
+          <span className="efp-title">Send a live event</span>
+          <span className="efp-sub">Choose an event type below to send a real payload through the Azure pipeline</span>
         </div>
         {isDone && <span className="efp-done-badge">✓ delivered</span>}
       </div>

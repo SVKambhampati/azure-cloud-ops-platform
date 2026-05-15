@@ -38,9 +38,9 @@ function StatCard({ label, value, status, raw, loading }) {
 function HealthCard({ value, status, loading }) {
   return (
     <div className={`health-card health-card--${status}`}>
-      <span className="health-label">SYSTEM STATUS</span>
+      <span className="health-label">System Status</span>
       <span className="health-value">
-        {loading ? <span className="skeleton skeleton--health" /> : value.toUpperCase()}
+        {loading ? <span className="skeleton skeleton--health" /> : value}
       </span>
       <span className={`health-indicator health-indicator--${status}`}></span>
     </div>
@@ -60,28 +60,28 @@ function OverviewCards({ metrics, systemHealth, eventsCount, loading }) {
         loading={loading}
       />
       <StatCard
-        label="CPU"
+        label="CPU Usage"
         value={cpu != null ? `${cpu}%` : '—'}
         status={statusForCpu(cpu)}
         raw={cpu}
         loading={loading}
       />
       <StatCard
-        label="MEMORY"
+        label="Memory"
         value={mem != null ? `${mem}%` : '—'}
         status={statusForMemory(mem)}
         raw={mem}
         loading={loading}
       />
       <StatCard
-        label="ERROR RATE"
+        label="Error Rate"
         value={err != null ? `${(err * 100).toFixed(1)}%` : '—'}
         status={statusForErrorRate(err)}
         raw={err != null ? err * 100 : null}
         loading={loading}
       />
       <StatCard
-        label="EVENTS"
+        label="Events"
         value={eventsCount != null ? eventsCount.toLocaleString() : '—'}
         status="normal"
         loading={loading}

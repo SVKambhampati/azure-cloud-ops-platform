@@ -1,28 +1,31 @@
 function Header({ lastUpdated, systemHealth, loading }) {
   const status = systemHealth?.status ?? 'unknown';
   const statusText = loading
-    ? 'CONNECTING'
+    ? 'Connecting'
     : status === 'critical'
-    ? 'CRITICAL'
+    ? 'Critical'
     : status === 'warning'
-    ? 'DEGRADED'
+    ? 'Degraded'
     : status === 'healthy'
-    ? 'NOMINAL'
-    : 'UNKNOWN';
+    ? 'Nominal'
+    : 'Unknown';
 
   return (
     <header className="header">
       <div className="header-left">
-        <span className="logo">CLOUDOPS<span className="logo-slash">/</span>MONITOR</span>
-        <span className="header-divider">|</span>
-        <span className="header-env">PROD · AZURE</span>
+        <span className="logo">
+          CloudOps<span className="logo-slash">/</span>Monitor
+        </span>
+        <span className="header-env">Azure · Prod</span>
       </div>
+
       <div className="header-center">
         <span className={`header-status header-status--${status}`}>
           <span className="header-status-dot"></span>
           {statusText}
         </span>
       </div>
+
       <div className="header-right">
         {lastUpdated && <span className="header-ts">{lastUpdated}</span>}
       </div>

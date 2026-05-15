@@ -17,7 +17,7 @@ function PipelineStatus() {
   return (
     <div className="panel">
       <div className="panel-header">
-        <span className="panel-title">PIPELINE</span>
+        <span className="panel-title">Pipeline</span>
         <span className="live-indicator">
           <span className="live-dot"></span>LIVE
         </span>
