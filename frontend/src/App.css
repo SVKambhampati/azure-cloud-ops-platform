@@ -759,3 +759,357 @@ body {
   .telemetry-table th:nth-child(6),
   .telemetry-table td:nth-child(6) { display: none; }
 }
+
+/* ============================================================
+   Event Flow Panel
+   ============================================================ */
+
+.efp {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Header */
+.efp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.efp-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.efp-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.efp-sub {
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.efp-done-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--green-dim);
+  border: 1px solid var(--green-mid);
+  border-radius: 100px;
+  padding: 3px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Pipeline flow ──────────────────────────────────────── */
+.efp-flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 4px 0 8px;
+  scrollbar-width: none;
+}
+
+.efp-flow::-webkit-scrollbar { display: none; }
+
+.efp-node-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.efp-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 12px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  min-width: 96px;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.efp-node--active {
+  border-color: var(--violet);
+  background: var(--violet-dim);
+  box-shadow: 0 0 0 3px var(--violet-dim);
+}
+
+.efp-node--done {
+  border-color: var(--green-mid);
+  background: var(--green-dim);
+}
+
+.efp-node-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--text-3);
+  transition: color 0.2s;
+}
+
+.efp-node--active .efp-node-icon { color: var(--violet); }
+.efp-node--done .efp-node-icon   { color: var(--green); }
+
+.efp-node-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+  text-align: center;
+  transition: color 0.2s;
+}
+
+.efp-node--active .efp-node-label { color: var(--violet); }
+.efp-node--done .efp-node-label   { color: var(--green); }
+
+.efp-node-sub {
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* Connectors */
+.efp-connector {
+  width: 56px;
+  flex-shrink: 0;
+  color: var(--border-2);
+  transition: color 0.3s;
+}
+
+.efp-connector--active { color: var(--green); }
+
+.efp-connector svg {
+  display: block;
+  width: 100%;
+  height: 16px;
+}
+
+/* ── Event type buttons ──────────────────────────────────── */
+.efp-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.efp-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  position: relative;
+}
+
+.efp-btn:hover:not(:disabled) {
+  border-color: var(--border-2);
+  background: var(--surface-3);
+  transform: translateY(-1px);
+}
+
+.efp-btn:active:not(:disabled) { transform: translateY(0); }
+
+.efp-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.efp-btn--selected.efp-btn--blue  { border-color: var(--blue);   background: var(--blue-dim); }
+.efp-btn--selected.efp-btn--green { border-color: var(--green-mid); background: var(--green-dim); }
+.efp-btn--selected.efp-btn--red   { border-color: var(--red);    background: var(--red-dim); }
+
+.efp-btn-label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.efp-btn--blue  .efp-btn-label { color: var(--blue); }
+.efp-btn--green .efp-btn-label { color: var(--green); }
+.efp-btn--red   .efp-btn-label { color: var(--red); }
+
+.efp-btn-desc {
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+.efp-btn-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.efp-field {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-3);
+  background: var(--surface-3);
+  border-radius: var(--r2);
+  padding: 2px 6px;
+}
+
+/* ── Step trace ──────────────────────────────────────────── */
+.efp-trace {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: efp-fade-in 0.2s ease;
+}
+
+@keyframes efp-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.efp-trace-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.efp-trace-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+}
+
+.efp-trace-payload {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-2);
+  background: var(--surface-3);
+  border-radius: var(--r2);
+  padding: 3px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 480px;
+}
+
+.efp-trace-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.efp-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r2);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.efp-step--active {
+  border-color: var(--violet);
+  background: var(--violet-dim);
+}
+
+.efp-step--done {
+  border-color: var(--green-mid);
+  background: var(--green-dim);
+}
+
+.efp-step--waiting { opacity: 0.45; }
+
+.efp-step-icon {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+  padding-top: 1px;
+  color: var(--text-3);
+}
+
+.efp-step--active .efp-step-icon { color: var(--violet); }
+.efp-step--done   .efp-step-icon { color: var(--green); }
+
+.efp-spinner {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--violet-mid);
+  border-top-color: var(--violet);
+  border-radius: 50%;
+  animation: efp-spin 0.7s linear infinite;
+}
+
+@keyframes efp-spin {
+  to { transform: rotate(360deg); }
+}
+
+.efp-step-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  display: block;
+}
+
+.efp-step-detail {
+  font-size: 11px;
+  color: var(--text-2);
+  line-height: 1.4;
+  display: block;
+  margin-top: 2px;
+}
+
+.efp-step > div,
+.efp-step {
+  display: flex;
+  flex-direction: column;
+}
+
+.efp-step {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* step text block */
+.efp-step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (max-width: 900px) {
+  .efp-buttons { grid-template-columns: 1fr; }
+  .efp-trace-steps { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .efp-flow { gap: 0; }
+  .efp-trace-steps { grid-template-columns: 1fr; }
+  .efp { padding: 20px 16px; }
+}
